@@ -1,0 +1,313 @@
+
+.settings-page {
+    width: 100%;
+    height: fit-content;
+    min-height: 100%;
+}
+
+.setting {
+	background-color: #fff;
+	width: 80rem;
+}
+
+.setting-content {
+	padding: 5rem 0 1rem 0;
+}
+
+.setting-content h2 {
+	font-size: 2.4rem;
+	margin-bottom: 3rem;
+	color: #000;
+}
+
+.page-container {
+	padding-top: 9rem;
+}
+
+
+.setting-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.setting-form input {
+	width: 30rem;
+	height: 3.5rem;
+	margin-bottom: 1rem;
+	border: 0.1rem solid #ddd;
+	border-radius: 0.5rem;
+	padding-left: 1rem;
+	font-size: 1.5rem;
+	transition: background-color 0.3s;
+	cursor: text;
+}
+
+.setting-form input:focus {
+	background-color: #d9ebf7;
+}
+
+.setting-form div {
+	margin-top: 2rem;
+}
+
+// .setting-form button {
+// 	padding: 1rem 1.5rem;
+// 	background-color: #1aa1f5;
+// 	color: #fff;
+// 	border-radius: 4rem;
+// 	border: 0.1rem solid #1aa1f5;
+// 	font-size: 1.5rem;
+// 	font-weight: bold;
+// 	margin-right: 1rem;
+// 	cursor: pointer;
+// }
+
+.setting-form label {
+	font-size: 1.6rem;
+	margin-right: 1rem;
+}
+
+.profile-img{
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	height: 300px;
+	cursor: pointer;
+}
+
+.profile-img-background-div {
+	width: 95%;
+	height: 100%;
+	position: absolute;
+	z-index: 0;
+	border-radius: 5%;
+	margin-top: 0 !important;
+}
+
+.profile-img img {
+	border-radius: 5%;
+	width: 100%;
+	z-index: 1;
+}
+
+.profile-img:hover img {
+	opacity: 0.3;
+	transition: opacity 0.5s;
+}
+
+.profile-img:hover .change-img-text {
+	opacity: 1;
+	transition: opacity 0.5s;
+}
+
+.profile-img .change-img-text {
+	top: 0;
+	width: 90%;
+	height: 80%;
+	position: absolute;
+	justify-self: center;
+	font-weight: bolder;
+	font-size: 5rem;
+	opacity: 0;
+	user-select: none;
+	text-align: center;
+	color: #fff;
+	padding-top: 2rem;
+}
+
+// .login-form a {
+// 	text-decoration: none;
+// 	font-size: 1.6rem;
+// 	color: #1aa1f5;
+// }
+
+
+
+
+
+
+
+
+
+
+// .login-footer {
+// 	grid-column: 1 / -1;
+// 	grid-row: 2 / -1;
+// 	background-color: #edf3f7;
+// 	padding-left: 100px;
+// 	display: flex;
+// 	flex-direction: column;
+// 	justify-content: center;
+// 	margin-top: 2rem;
+// }
+
+// .login-footer p {
+// 	font-size: 1.6rem;
+// 	font-weight: 300;
+// 	margin: 0.5rem 0;
+// }
+
+// .login-footer a {
+// 	text-decoration: none;
+// 	color: #1aa1f5;
+// }
+// /* end of login */
+
+// /* login modal */
+// .login-modal {
+// 	position: fixed;
+// 	top: 11.5rem;
+// 	left: 50%;
+// 	transform: translate(-50%, -50%);
+// 	background-color: #fff;
+// 	width: 70rem;
+// 	padding: 2rem;
+// 	text-align: center;
+// 	box-shadow: 0 0 0.7rem rgba(0, 0, 0, 0.3);
+// 	border-radius: 0 0 1rem 1rem;
+// 	display: none;
+// }
+
+// .login-modal i {
+// 	position: absolute;
+// 	top: 2rem;
+// 	right: 2rem;
+// 	font-size: 1.3rem;
+// 	color: #868383;
+// 	cursor: pointer;
+// }
+
+// .login-modal p {
+// 	margin: 2rem 1rem 0 1rem;
+// 	font-size: 1.6rem;
+// 	color: #868383;
+// }
+// /* end of login modal */
+// /* end of login page */
+
+// @media (max-width: 1100px) {
+// 	/* login page */
+// 	.login-page-nav ul {
+// 		width: 80rem;
+// 	}
+
+// 	.login {
+// 		width: 80rem;
+// 	}
+
+// 	.login-modal {
+// 		width: 60rem;
+// 	}
+// }
+
+// @media (max-width: 900px) {
+// 	/* login page */
+// 	.login-page-nav ul {
+// 		width: 60rem;
+// 	}
+
+// 	.login {
+// 		width: 60rem;
+// 	}
+
+// 	.login-modal {
+// 		width: 50rem;
+// 	}
+// }
+
+// @media (max-width: 700px) {
+// 	/* login page */
+// 	.login-page-nav ul {
+// 		width: 50rem;
+// 	}
+
+// 	.login {
+// 		width: 50rem;
+// 	}
+
+// 	.login-modal {
+// 		width: 40rem;
+// 	}
+// }
+
+// @media (max-width: 600px) {
+
+// 	/* login page */
+// 	.login-page-nav ul {
+// 		width: 40rem;
+// 	}
+
+// 	.login {
+// 		width: 40rem;
+// 		grid-template-columns: 5rem 8fr;
+// 	}
+
+// 	.login-form label {
+// 		font-size: 1.4rem;
+// 	}
+
+// 	.login-form a {
+// 		font-size: 1.4rem;
+// 	}
+
+// 	.login-footer {
+// 		padding-left: 5rem;
+// 	}
+
+// 	.login-footer p {
+// 		font-size: 1.4rem;
+// 	}
+
+// 	.login-modal {
+// 		width: 30rem;
+// 	}
+
+// 	.login-modal i {
+// 		top: 2.5rem;
+// 	}
+
+// 	.login-modal p {
+// 		font-size: 1.4rem;
+// 	}
+// }
+
+// @media (max-width: 500px) {
+// 	/* login page */
+// 	.login-page-nav ul {
+// 		width: 30rem;
+// 	}
+
+// 	.login {
+// 		width: 30rem;
+// 		grid-template-columns: 2rem 8fr;
+// 	}
+
+// 	.login-form input:not(.login-form-checkbox) {
+// 		width: 20rem;
+// 	}
+
+// 	.login-form a {
+// 		display: block;
+// 		margin-top: 1.5rem;
+// 	}
+
+// 	.login-footer {
+// 		padding-left: 2rem;
+// 	}
+// }
+
+// @media (max-width: 400px) {
+// 	/* login page */
+// 	.login-page {
+// 		grid-template-columns: 2rem 2fr 2rem;
+// 	}
+
+// 	.login {
+// 		width: 100%;
+// 	}
+
+// 	.login-modal {
+// 		width: 25rem;
+// 	}
+// }

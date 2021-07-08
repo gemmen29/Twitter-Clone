@@ -1,0 +1,116 @@
+<section class="feeds-page dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
+    <!-- feeds nav -->
+    <app-nav></app-nav>
+    <!-- end of feeds nav -->
+        <!-- feeds content -->
+        <div class="container d-flex justify-content-between">
+            <!-- main content -->
+            <div class="col-12 col-xl-8">
+                <div class="col-xl-11 col-12 mx-auto">
+                    <div class="feeds-content dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
+                        <div class="feeds-header dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                            <div class="border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                                <div class="py-4 px-5 h2 mb-0 light-mode-2" [ngClass]="{'light' : isDarkModeEnabled()}">
+                                    Searching for "<span class="fw-bold">{{searchKey}}</span>"
+                                </div>
+                                <hr class="border m-0">
+                                <div class="p-5 border" [ngClass]="{'border-color' : isDarkModeEnabled()}" *ngFor="let user of allUsers;let i=index">
+                                    <div class="d-flex align-items-center">
+                                        <div class="user-avatar" routerLink="/profile/{{ user.userName }}">
+                                            <img [src]="createResourcesPath('Resources/Images/' + user.userPic)" />
+                                        </div>
+                                        <div style="cursor: pointer;" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/profile/{{ user.userName }}">
+                                            <h2 class="fw-bold">{{user.firstName}} {{user.lastName}}</h2>
+                                            <h5>@{{user.userName}}</h5>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <a class="btn btn-primary btn-lg rounded-pill fw-bold" (click)="openChat(user.userName)">Message</a>
+                                        </div>
+                                        <div class="ms-2">
+                                            <button class="btn btn-primary btn-lg rounded-pill fw-bold" style="width:8rem" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user.id)">Follow</button>
+                                            <button class="btn btn-danger btn-lg rounded-pill fw-bold" style="width:8rem" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user.id)">UnFollow</button>                        
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <nav aria-label="..." class="text-center" *ngIf="hasUsers">
+                                    <div class="d-flex justify-content-center pt-3">
+                                        <ul class="pagination">
+                                            <li class="page-item" [ngClass]="{disabled:currentPageNumber <=1, cursorNotAllowed:currentPageNumber <=1}">
+                                                <button class="page-link" [disabled]="currentPageNumber <=1" (click)="getSelectedPage(currentPageNumber-1)">Previous</button>
+                                            </li>
+                                            <li class="page-item" *ngFor='let x of counter(numberOfPages) ;let i = index' [class.active]="currentPageNumber == (i+1)">
+                                                <a class="page-link" (click)="getSelectedPage(i+1)">{{i+1}} </a>
+                                            </li>
+                                            <li class="page-item" [ngClass]="{disabled:currentPageNumber >=numberOfPages, cursorNotAllowed:currentPageNumber >=numberOfPages}">
+                                                <button class="page-link" [disabled]="currentPageNumber >= numberOfPages" (click)="getSelectedPage(currentPageNumber+1)">Next</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="float-right h5 mr-4 text-secondary">Showing {{currentPageNumber}} of {{numberOfPages}}</div>
+                                </nav>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of main content -->
+    
+            <app-side-panel class="mx-0 col-xl-4"></app-side-panel>
+    
+        </div>
+        <!-- end of feeds content -->
+    <!-- <table class="table table-bordered table-hover" *ngIf="hasUsers">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of allUsers;let i=index">
+                <th scope="row">{{i+(pageSize*(currentPageNumber-1))+1}}</th>
+                <td>{{ user.userName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>
+                    <a class="btn btn-primary" (click)="openChat(user.userName)">Chat With {{user.userName}}</a>
+                </td>
+                <td>
+                    <button class="btn btn-primary me-2" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user.id)">Follow</button>
+                    <button class="btn btn-danger" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user.id)">UnFollow</button>
+                </td>
+            </tr>
+        </tbody>
+    </table> -->
+    <!-- pagination -->
+    <!-- <nav aria-label="..." class="" *ngIf="hasUsers">
+        <div class="d-inline-block">
+            <ul class="pagination">
+                <li class="page-item" [ngClass]="{disabled:currentPageNumber <=1, cursorNotAllowed:currentPageNumber <=1}">
+                    <button class="page-link" [disabled]="currentPageNumber <=1" (click)="getSelectedPage(currentPageNumber-1)">Previous</button>
+                </li>
+                <li class="page-item" *ngFor='let x of counter(numberOfPages) ;let i = index' [class.active]="currentPageNumber == (i+1)">
+                    <a class="page-link" (click)="getSelectedPage(i+1)">{{i+1}} </a>
+                </li>
+                <li class="page-item" [ngClass]="{disabled:currentPageNumber >=numberOfPages, cursorNotAllowed:currentPageNumber >=numberOfPages}">
+                    <button class="page-link" [disabled]="currentPageNumber >= numberOfPages" (click)="getSelectedPage(currentPageNumber+1)">Next</button>
+                </li>
+            </ul>
+        </div>
+        <div class="float-right h5 mr-4 text-secondary">Showing {{currentPageNumber}} of {{numberOfPages}}</div>
+    </nav>
+    <div class="row" *ngIf="!hasUsers">
+        <div class="text-center alert alert-danger col-9 mx-auto">
+            There's no users to show
+        </div>
+    </div> -->
+</section>

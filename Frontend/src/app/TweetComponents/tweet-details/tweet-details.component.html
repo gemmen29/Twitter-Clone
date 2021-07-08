@@ -1,0 +1,191 @@
+<section class="feeds-page dark-mode-2"  [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
+    <!-- feeds nav -->
+    <app-nav></app-nav>
+    <!-- end of feeds nav -->
+
+    <!-- feeds content -->
+    <div class="container d-flex justify-content-between">
+        <div class="col-12 col-xxl-8 col-xl-8 col-lg-12 main-content">
+            <div class="col-11 mx-auto">
+                <div class="feeds-content">
+
+                    <div class="post border dark-mode-1" *ngIf="tweet" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" >
+                        <div class="post-header">
+                            <div class="user-avatar" routerLink="/profile/{{tweet.author.userName}}">
+                                <img [src]="createResourcesPath('Resources/Images/' + tweet.author.userPic)" />
+                            </div>
+                            <div class="post-content" style="width: 100%;">
+                                <div>
+                                    <div class="justify-content-between d-flex">
+                                        <div class="post-user-info light-text" [ngClass]="{'light' : isDarkModeEnabled()}" >
+                                            <span class="post-user-name">
+                                                <h4 routerLink="/profile/{{tweet.author.userName}}">{{ tweet.author.firstName + " " + tweet.author.lastName }}</h4>
+                                                <i class="fas fa-check-circle"></i>
+                                            </span>
+                                            <span class="post-user-username" routerLink="/profile/{{tweet.author.userName}}">
+                                                @{{ tweet.author.userName }}
+                                            </span>
+                                        </div>
+                                        <div class="dropdown" *ngIf="currentUser.email == tweet.author.email">
+                                            <button 
+                                                class="btn dropdown light-text" [ngClass]="{'light' : isDarkModeEnabled()}"
+                                                type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
+                                                    class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                                </svg>
+                                            </button>
+                                            <ul class="dropdown-menu dark-mode-1" [ngClass]="{ 'dark-1 border-color': isDarkModeEnabled() }" aria-labelledby="dropdownMenuButton1">
+                                                <li><a style="font-size: 15px;" class="dropdown-item" (click)="deleteTweet(tweet.id)" [ngClass]="{ light: isDarkModeEnabled() }">Delete</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item h4 light-text" [ngClass]="{
+                                                        'user-bookmark': tweet.isBookmarked === true,
+                                                        light: isDarkModeEnabled()
+                                                      }" (click)="bookmarkOrRemoveBookmark(tweet.id, tweet.isBookmarked)">
+                                                      Bookmark
+                                                      <span class="h6" *ngIf="currentUser.email == tweet.author.email">
+                                                        ({{ tweet.bookmarkCount }})
+                                                      </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div> 
+                                </div> 
+                            </div>
+                        </div>
+                        <div id="replyDiv" class="post-content" style="width: 100%;">
+                    
+                            <p class="post-text light-text d-flex flex-wrap text-break" [ngClass]="{'light' : isDarkModeEnabled()}">
+                                {{ tweet.body }}
+                            </p>
+                    
+                            <div class="post-img" [ngClass]="{'d-flex flex-wrap' : tweet.images.length > 1}" *ngIf="tweet.images.length">
+                                <img (click)="setImgResource($event.target.src)" *ngFor="let img of tweet.images" data-bs-toggle="modal" data-bs-target="#imageModal" [class]='getImageClasses(tweet.images.length)' [src]="createResourcesPath('Resources/Images/' + img.imageName)" />
+                            </div>
+                    
+                            <div class="modal fade" id="imageModal" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <button #closebutton class="btn-close d-none" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                                        <img [src]="getImageResource()" class="img-thumbnail" (click)='closeModal()'/>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <div class="post-img" *ngIf="tweet.video">
+                                <video controls width="100%" height="auto">
+                                    <source [src]="createResourcesPath('Resources/Videos/' + tweet.video.videoName)" />
+                                </video>
+                            </div>
+                    
+                            <div class="post-date bottom-border mt-3">
+                                {{getFullDate(tweet.creationDate)}}
+                            </div>
+                    
+                            <div class="d-flex bottom-border">
+                                <div class="tweet-statistics">
+                                    <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{ tweet.retweetCount }}</span> <span class="tweet-statistics-text">Retweets</span>
+                                </div>
+                                <div class="tweet-statistics">
+                                    <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{ tweet.replyCount }}</span> <span class="tweet-statistics-text">Replies</span>
+                                </div>
+                                <div class="tweet-statistics">
+                                    <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{ tweet.likeCount }}</span> <span class="tweet-statistics-text">Likes</span>
+                                </div>
+                            </div>
+                    
+                            <div class="post-icons d-flex justify-content-around bottom-border">
+                                <span><i class="far fa-comment"></i></span>
+                                <span><i class="fas fa-retweet" (click)="openPostTweet(tweet.id)"></i></span>
+                                <span [ngClass]="{'user-like': tweet.isLiked === true }" (click)="likeOrDislike(tweet.id, tweet.isLiked)"><i
+                                        class="fas fa-heart mr-1" [ngClass]="{'user-like': tweet.isLiked === true }"></i>
+                                </span>
+                                <span><i class="fas fa-share-alt"></i></span>
+                            </div>
+                    
+                            <div class="d-flex">
+                    
+                                <div class="user-avatar mt-4">
+                                    <img [src]="createResourcesPath('Resources/Images/' + tweet.author.userPic)" />
+                                </div>
+                                <div style="width: 100%;">
+                                    <p class="reply-at-text d-none">Replying to &nbsp;<a href="#">@{{ tweet.author.userName }}</a></p>
+                                    <div class="d-flex mt-5 flex-column" id="mt5Class">
+                    
+                                        <div class="d-flex">
+                                            <!-- <span class="dark-mode-1 light-text reply-text-input" role="textbox" contenteditable (focus)="writeReplyUIChange($event)" (blur)="writeReplyUIChange($event)"></span> -->
+                                            <div style="width: 100%;">
+                                                <span class="dark-mode-1 light-text reply-text-input" [ngClass]="{'dark-1 light' : isDarkModeEnabled()}"  role="textbox" contenteditable (focus)="showReplyUIChange($event)"></span>
+                                                <div style="width: 70%; margin: auto; padding-bottom: 10px;" *ngIf="progressBarWidth != '100%' && IsUploading">
+                                                    <label style="font-size: 10px;">Uploading...</label>
+                                                    <div class="progress">
+                                                        <div class="progress-bar uploading-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0"
+                                                            aria-valuemax="100" [style.width]="UploadingProgress + '%'">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap justify-content-center ml-5 image-list">
+                                                    <div class="modal-image position-relative" *ngFor="let url of imageUrls; let i = index">
+                                                        <img [src]="url" data-index="{{i}}" />
+                                                        <button class="position-absolute"
+                                                            style="left: 5%; margin-top: 5px; border: none; background: none; border-radius: 50%;"
+                                                            (click)="deletImageFromTweet($event)">
+                                                            <i class="fas fa-times-circle fa-2x text-dark bg-light" style="border-radius: 50%"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap justify-content-center ml-5 video-list">
+                                                </div>
+                                            </div>
+                                            <button id="replyButtonNextToInput" class="btn btn-primary reply-button" (click)="checkBeforeUploading()" style="height: min-content;">Reply</button>
+                                        </div>
+                    
+                                        <div class="reply-input-icons mt-3 d-none">
+                                            <div class="file-input">
+                                                <input type="file" id="image-file" class="image-file d-none" multiple
+                                                    accept="image/png, image/jpeg, image/jpg" multiple (change)="detectImageFiles($event)" />
+                                                <label for="image-file"><i class="far fa-image"></i></label>
+                                            </div>
+                                            <div class="file-input">
+                                                <input type="file" id="video-file" class="video-file d-none" multiple
+                                                    accept="video/webm, video/mkv, video/flv, video/vob, video/gifv, video/mp4, video/avi"
+                                                    (change)="detectVideoFiles($event)" />
+                                                <label for="video-file"><i class="fas fa-video"></i></label>
+                                            </div>
+                                            <button class="btn btn-primary reply-button ms-auto" (click)="checkBeforeUploading()">Reply</button>
+                     
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="seperator dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}"></div>
+                    
+                    <div *ngIf="replies != null">
+                        <app-tweet-replies [replies]="replies" (onReply)="openPostTweetWindow($event)"></app-tweet-replies>
+                    </div>
+                    <div class="text-center py-5">
+                        <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold load-more-btn" (click)="getReplies(pageSize,currentPageNumber + 1)">Load More</button>
+                        <h3 class="light-text d-none" id='all-caught-up-text' [ngClass]="{'light' : isDarkModeEnabled()}">You are all caught up</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-post-tweet style="z-index: 2;" class="modal-wrapper" (onClose)="closePostTweetWindow()"></app-post-tweet>
+        <!-- (onRetweet)="changeSuccessful()" (onReply)="changeSuccessful()" -->
+        <div class="mx-0 col-lg-4 d-none d-lg-block">
+            <app-side-panel></app-side-panel>
+        </div>
+        <!-- end of feeds content -->
+    </div>
+</section>
+
+
+
+
+

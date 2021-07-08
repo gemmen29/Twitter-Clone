@@ -1,0 +1,118 @@
+<section class="feeds-page dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
+    <!-- feeds nav -->
+    <app-nav></app-nav>
+    <!-- end of feeds nav -->
+    <!-- feeds content -->
+    <div class="container d-flex justify-content-between">
+        <!-- main content -->
+        <div class="col-12 col-xl-8">
+            <div class="col-xl-11 col-12 mx-auto">
+                <div class="feeds-content dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
+                    <div class="feeds-header dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                        <div class="header-top border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngIf="currentOpenedUserProfile != undefined">
+                            <div class="header-img-wrapper border rounded-circle light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
+                                <img [src]="createResourcesPath('Resources/Images/' + currentOpenedUserProfile.userPic)" />
+                            </div>
+                            <div>
+                                <h4 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentOpenedUserProfile.firstName}} {{currentOpenedUserProfile.lastName}}</h4>
+                                <h2 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">@{{currentOpenedUserProfile.userName}}</h2>
+                                <div class="d-flex follow-statistics">
+                                    <div id="followings" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentOpenedUserProfile.followingCount}} <span>Following</span></div>
+                                    <div id="followers" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentOpenedUserProfile.followersCount}} <span>Follower</span></div>
+                                </div>  
+                            </div>
+
+                            <div class="modal fade" id="followModal" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content d-flex dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" style="min-height:50vh">
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title fw-bold h3 light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{this.modalHeader}}</h5>
+                                            <button class="ms-auto btn btn-lg fw-bold light-text" [ngClass]="{'light' : isDarkModeEnabled()}" data-bs-dismiss="modal" #closeButton>X</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="d-flex flex-column" *ngIf="followUsersForModal.length > 0; else elseTemplate">
+                                                <div *ngFor="let user of followUsersForModal" class="d-flex align-items-center mb-3">
+                                                    <div class="user-avatar" routerLink="/profile/{{user.userName}}">
+                                                        <img [src]="createResourcesPath('Resources/Images/' + user.userPic)" (click)='closeButton.click()'>
+                                                    </div>
+                                                    <div class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/profile/{{user.userName}}" style="cursor: pointer" (click)='closeButton.click()'>
+                                                        <h2 class="fw-bold">{{user.firstName}} {{user.lastName}}</h2>
+                                                        <h5>@{{user.userName}}</h5>
+                                                    </div>
+                                                    <!-- <button class="btn btn-primary ms-auto btn-lg fw-bold">Follow</button> -->
+                                                    <button class="btn btn-primary btn-lg ms-auto rounded-pill fw-bold" style="width:8rem" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user.id)">Follow</button>
+                                                    <button class="btn btn-danger btn-lg ms-auto rounded-pill fw-bold" style="width:8rem" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user.id)">UnFollow</button>    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer border-0 justify-content-center pb-3" *ngIf="followUsersForModal.length > 0">
+                                            <button *ngIf="tweets.length > 0" class="btn btn-outline-primary rounded-pill fw-bold load-more-users-btn" (click)="getFollowersOrFollowing()">Load More</button>
+                                            <h3 *ngIf="tweets.length > 0" id='no-more-users-text' style="color: gray;" class="d-none user-select-none">No more users</h3>
+                                        </div>
+
+                                    </div>
+                                    <ng-template #elseTemplate>
+                                        <div class="d-flex align-items-center no-tweets-div dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                                            <h1 class="user-select-none">No Users To Display</h1>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+
+                            <!-- <button class="">...</button> -->
+                            <div class="ms-auto dropdown light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
+                                <a class="header-btn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                                  ...
+                                </a>
+                              
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                                  <li><a class="dropdown-item dll-item light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/setting">Edit profile</a></li>
+                                  <li><a class="dropdown-item dll-item light-text" [ngClass]="{'light' : isDarkModeEnabled()}" href="#">Another action</a></li>
+                                  <li><a class="dropdown-item dll-item light-text" [ngClass]="{'light' : isDarkModeEnabled()}" href="#">Something else here</a></li>
+                                </ul>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="main-content border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                        <ul id="tweet-tabs">
+                            <li data-value='tweets' class="active">
+                                <a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"(click)="changeTab($event.target)">Tweets</a>
+                            </li>
+                            <li data-value='retweets_replies'>
+                                <a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" (click)="changeTab($event.target)">Retweets & replies</a>
+                            </li>
+                            <li data-value='likes'>
+                                <a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" (click)="changeTab($event.target)">Likes</a>
+                            </li>
+                            <li data-value='bookmarks'>
+                                <a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" (click)="changeTab($event.target)">Bookmarks</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="border no-tweets-div dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngIf="tweets.length === 0">
+                        <app-loader class="loader"></app-loader>
+                        <div class="d-none" id="no-tweets">
+                            <h1 class="user-select-none">No Tweets Here</h1>
+                            <p class="user-select-none">Follow more people</p>
+                        </div>
+
+                    </div>
+                    <app-tweet [tweetList]="tweets" (onReply)="openPostTweetWindow($event)">
+                    </app-tweet>
+                    <div class="text-center py-5">
+                        <button *ngIf="tweets.length > 0" class="btn btn-outline-primary btn-lg rounded-pill fw-bold load-more-btn" (click)="getTweetsForSelectedTab()">Load More</button>
+                        <h3 *ngIf="tweets.length > 0" style="color: gray;" class="d-none user-select-none" id='all-caught-up-text'>You are all caught up</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end of main content -->
+        <app-post-tweet style="z-index: 2;" class="modal-wrapper" (onClose)="closePostTweetWindow()"
+            (onPost)="changeSuccessful()"></app-post-tweet>
+        <app-side-panel class="mx-0 col-xl-4"></app-side-panel>
+    </div>
+    <!-- end of feeds content -->
+</section>

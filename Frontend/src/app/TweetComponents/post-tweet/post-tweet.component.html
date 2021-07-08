@@ -1,0 +1,56 @@
+<div class="modal dark-mode-1" [ngClass]="{'dark-1' : isDarkModeEnabled()}" style="overflow: hidden">
+    <div class="modal-header border" [ngClass]="{'border-color' : isDarkModeEnabled()}">
+        <i class="fas fa-times" (click)="closePostTweetWindow()"></i>
+    </div>
+    <div style="overflow: hidden" class="border" [ngClass]="{'border-color' : isDarkModeEnabled()}">
+        <div class="modal-body">
+            <div class="modal-img">
+                <img *ngIf="currentUser != undefined" [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
+            </div>
+            <textarea style="resize: none; clear: both" type="text" placeholder="What's happening?"
+                class="modal-input dark-mode-2 light-text border tweet-text" [ngClass]="{'dark-2 light border-color' : isDarkModeEnabled()}" 
+                maxlength="280" rows="6"></textarea>
+        </div>
+        <div style="width: 70%; margin: auto; padding-bottom: 10px;" *ngIf="progressBarWidth != '100%' && IsUploading">
+            <label style="font-size: 10px;">Uploading...</label>
+            <div class="progress">
+                <div class="progress-bar uploading-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0"
+                    aria-valuemax="100" [style.width]="UploadingProgress + '%'">
+                </div>
+            </div>
+        </div>
+        <!-- style="margin-left: 6.7rem;" -->
+        <div class="d-flex flex-wrap justify-content-center ml-5 image-list">
+            <div class="modal-image position-relative" *ngFor="let url of imageUrls; let i = index">
+                <img [src]="url" data-index="{{i}}" />
+                <button class="position-absolute"
+                    style="left: 5%; margin-top: 5px; border: none; background: none; border-radius: 50%;"
+                    (click)="deletImageFromTweet($event)">
+                    <i class="fas fa-times-circle fa-2x text-dark bg-light" style="border-radius: 50%"></i>
+                </button>
+            </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center ml-5 video-list">
+        </div>
+    </div>
+    <div class="modal-footer py-3 border" [ngClass]="{'border-color' : isDarkModeEnabled()}">
+        <div class="mr-auto">
+            <div class="modal-icons">
+                <div class="file-input">
+                    <input type="file" id="image-file" class="image-file" multiple
+                        accept="image/png, image/jpeg, image/jpg" multiple (change)="detectImageFiles($event)" />
+                    <label for="image-file"><i class="far fa-image"></i></label>
+                </div>
+                <div class="file-input">
+                    <input type="file" id="video-file" class="video-file" multiple
+                        accept="video/webm, video/mkv, video/flv, video/vob, video/gifv, video/mp4, video/avi"
+                        (change)="detectVideoFiles($event)" />
+                    <label for="video-file"><i class="fas fa-video"></i></label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="modal-button post-button" (click)="checkBeforeUploading()" type="button">Post</button>
+        </div>
+    </div>
+</div>

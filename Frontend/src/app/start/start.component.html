@@ -1,0 +1,66 @@
+<!-- main page -->
+<section class="h-100 d-flex flex-wrap">
+    <div class="main-page">
+        <div class="middle-page-content">
+            <!-- left -->
+            <div class="left col-6">
+                <div class="left-content">
+                    <div>
+                        <i class="fas fa-search"></i>
+                        <h3 class="left-content-heading">Find your interests</h3>
+                    </div>
+                    <div>
+                        <i class="fas fa-user-friends"></i>
+                        <h3 class="left-content-heading">
+                            Explore what people are talking about
+                        </h3>
+                    </div>
+                    <div>
+                        <i class="fas fa-comment"></i>
+                        <h3 class="left-content-heading">Join the people</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- end of left -->
+            <!-- right -->
+            <div class="right col-6">
+                <form class="right-content-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                    <div class="form-group">
+                        <input type="email" [class.is-invalid]="email.invalid && email.touched" formControlName="email" class="form-control">
+                        <div *ngIf="email.errors && (email.invalid && email.touched)">
+                            <small class="text-danger" *ngIf="email.errors?.required">email is required</small>
+                            <small class="text-danger" *ngIf="!email.errors?.required && email.errors?.badPattern">email is not
+                                valid</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" formControlName="password"
+                            [class.is-invalid]="password.invalid && password.touched " class="form-control">
+                        <small class="text-danger" *ngIf="password.touched&&password.errors?.required">
+                            password is required
+                        </small>
+                        <small class="text-danger" *ngIf="invalidEmailOrPassword">
+                            Invalid email or password
+                        </small>
+                    </div>
+                    <button type="submit" class="btn-top" value="Submit Form" [disabled]="loginForm.invalid">Login</button>
+                </form>
+                <div class="middle-content">
+                    <i class="fas fa-dove"></i>
+                    <h1>Explore what's happening in the world</h1>
+                    <h4>Join Twitter today</h4>
+                    <button type="button" class="sign-up main-btn w-100" routerLink="/signup">Sign Up</button>
+                    <button type="button" class="log-in main-btn w-100" routerLink="/login">Log In</button>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- end of right -->
+    </div>
+    <div class="w-100">
+        <app-footer></app-footer>
+    </div>
+    <!-- end of main page -->
+</section>

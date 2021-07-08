@@ -1,0 +1,272 @@
+<!-- login page -->
+<section
+  class="settings-page dark-mode-2"
+  [ngClass]="{ 'dark-2 border-color': isDarkModeEnabled() }"
+>
+  <!-- nav -->
+  <app-nav></app-nav>
+  <!-- end of nav -->
+  <!-- settings -->
+  <div class="container-fluid page-container">
+    <div
+      class="
+        setting
+        d-flex
+        mx-auto
+        justify-content-center
+        flex-column
+        col-10
+        dark-mode-1
+      "
+      [ngClass]="{ 'dark-1 border-color': isDarkModeEnabled() }"
+    >
+      <div class="setting-content container px-5 mx-auto">
+        <h2
+          class="text-center fw-bold light-text mb-4"
+          [ngClass]="{ light: isDarkModeEnabled() }"
+        >
+          Settings
+        </h2>
+
+        <form
+          class="setting-form"
+          [formGroup]="settingForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="container mt-0">
+            <div class="row mt-0">
+              <div class="col-md-6 mt-0">
+                <!-- <div class="form-group">
+                                    <label class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">Username</label>
+                                    <input type="text" formControlName="username" class="form-control login-user-info" />
+                                    <div *ngIf="username.errors && username.invalid && username.touched">
+                                        <small class="text-danger" *ngIf="email.errors?.required">
+                                            Username is required
+                                        </small>
+                                    </div>
+                                </div> -->
+                <div class="form-group">
+                  <label
+                    class="light-text"
+                    [ngClass]="{ light: isDarkModeEnabled() }"
+                    >Firstname</label
+                  >
+                  <input
+                    type="text"
+                    [class.is-invalid]="firstname.invalid && firstname.touched"
+                    formControlName="firstname"
+                    class="form-control login-user-info"
+                  />
+                  <div
+                    *ngIf="
+                      firstname.errors && firstname.invalid && firstname.touched
+                    "
+                  >
+                    <small
+                      class="text-danger"
+                      *ngIf="firstname.errors?.required"
+                      >Firstname is required</small
+                    >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label
+                    class="light-text"
+                    [ngClass]="{ light: isDarkModeEnabled() }"
+                    >Lastname</label
+                  >
+                  <input
+                    type="text"
+                    [class.is-invalid]="lastname.invalid && lastname.touched"
+                    formControlName="lastname"
+                    class="form-control login-user-info"
+                  />
+                  <div
+                    *ngIf="
+                      lastname.errors && lastname.invalid && lastname.touched
+                    "
+                  >
+                    <small
+                      class="text-danger"
+                      *ngIf="lastname.errors?.required"
+                    >
+                      Lastname is required
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label
+                    class="light-text"
+                    [ngClass]="{ light: isDarkModeEnabled() }"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    [class.is-invalid]="email.invalid && email.touched"
+                    formControlName="email"
+                    class="form-control login-user-info"
+                  />
+                  <div *ngIf="email.errors && email.invalid && email.touched">
+                    <small class="text-danger" *ngIf="email.errors?.required">
+                      email is required
+                    </small>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        !email.errors?.required && email.errors?.badPattern
+                      "
+                    >
+                      email is not valid
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="profile-img col-md-6" (click)="img.click()">
+                <div class="profile-img-background-div dark-1"></div>
+                <img
+                  *ngIf="image != null"
+                  [src]="newImagePath || createResourcesPath('Resources/Images/' + image)"
+                  alt=""
+                />
+                <div class="change-img-text">Change profile image</div>
+                <input
+                  type="file"
+                  (change)="changePhoto($event)"
+                  value="Change Photo"
+                  class="d-none"
+                  #img
+                />
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button
+              type="submit"
+              class="btn btn-primary rounded-pill fw-bold btn-lg px-5"
+              value="Submit Form"
+              [disabled]="settingForm.invalid"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="settings-content d-none">
+      <h2>Settings</h2>
+      <form
+        class="login-form"
+        [formGroup]="settingForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="form-group">
+                <label>Username</label>
+                <input
+                  type="text"
+                  formControlName="username"
+                  class="form-control login-user-info"
+                />
+                <div
+                  *ngIf="
+                    username.errors && username.invalid && username.touched
+                  "
+                >
+                  <small class="text-danger" *ngIf="email.errors?.required">
+                    Username is required
+                  </small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Firstname</label>
+                <input
+                  type="text"
+                  [class.is-invalid]="firstname.invalid && firstname.touched"
+                  formControlName="firstname"
+                  class="form-control login-user-info"
+                />
+                <div
+                  *ngIf="
+                    firstname.errors && firstname.invalid && firstname.touched
+                  "
+                >
+                  <small class="text-danger" *ngIf="firstname.errors?.required"
+                    >Firstname is required</small
+                  >
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Lastname</label>
+                <input
+                  type="text"
+                  [class.is-invalid]="lastname.invalid && lastname.touched"
+                  formControlName="lastname"
+                  class="form-control login-user-info"
+                />
+                <div
+                  *ngIf="
+                    lastname.errors && lastname.invalid && lastname.touched
+                  "
+                >
+                  <small class="text-danger" *ngIf="lastname.errors?.required">
+                    Lastname is required
+                  </small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  [class.is-invalid]="email.invalid && email.touched"
+                  formControlName="email"
+                  class="form-control login-user-info"
+                />
+                <div *ngIf="email.errors && email.invalid && email.touched">
+                  <small class="text-danger" *ngIf="email.errors?.required">
+                    email is required
+                  </small>
+                  <small
+                    class="text-danger"
+                    *ngIf="!email.errors?.required && email.errors?.badPattern"
+                  >
+                    email is not valid
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5" style="margin-top: 80px; height: 300px">
+              <img
+                *ngIf="image != null"
+                [src]="createResourcesPath('Resources/Images/' + image)"
+                style="width: 95%; height: 100%"
+                alt=""
+              />
+            </div>
+            <!-- <div class="col-md-5" style="margin-top: 100px;">
+                            <img [src]="createResourcesPath('Resources/Images/' +image)" width="100%" alt="">
+                        </div> -->
+            <input
+              type="file"
+              (change)="changePhoto($event)"
+              value="Change Photo"
+            />
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="btn-top"
+          value="Submit Form"
+          [disabled]="settingForm.invalid"
+        >
+          Save
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- end of settings -->
+</section>
+<!-- end of login page -->

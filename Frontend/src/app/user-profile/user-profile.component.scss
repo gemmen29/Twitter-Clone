@@ -1,0 +1,263 @@
+/* common styles */
+
+/* feeds page */
+
+.feeds-page {
+    width: 100%;
+    height: fit-content;
+    min-height: 100%;
+}
+
+/* no tweets div */
+.no-tweets-div {
+    height: 25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+}
+
+.no-tweets-div h1 {
+    font-size: 6rem;
+    font-weight: bolder;
+    text-shadow: 0px 1px, 1px 0px, 1px 1px;
+    color: #838383;
+}
+
+.no-tweets-div p {
+    font-size: 2rem;
+    color: #838383;
+}
+/* end of no tweets div */
+/* profile main content */
+.main-content {
+	background-color: #fff;
+	padding: 1.5rem 0;
+}
+
+.main-content ul {
+	margin: auto;
+	display: flex;
+	list-style: none;
+    justify-content: space-around;
+}
+
+.main-content li {
+	margin: 0 1rem;
+	position: relative;
+}
+
+.main-content li::after {
+	content: '';
+	width: 100%;
+	height: 0.4rem;
+	background-color: #1aa1f5;
+	position: absolute;
+	bottom: -1.5rem;
+	left: 0;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.main-content li:hover::after {
+	opacity: 1;
+}
+
+.main-content a {
+	font-size: 1.6rem;
+	text-decoration: none;
+	color: #000;
+	transition: color 0.3s;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.main-content li:hover a {
+	color: #1aa1f5;
+}
+
+.active a{
+	color: #1aa1f5;
+}
+
+.active::after {
+	opacity: 1 !important;
+}
+
+/* end of profile main content */
+
+.load-more-btn {
+    width: 15rem;
+    padding: 1rem .5rem;
+    font-size: 1.5rem;
+}
+
+.load-more-users-btn {
+    width: 10rem;
+    padding: 1rem .5rem;
+    font-size: 1.35rem;
+}
+
+/* feeds content */
+
+.feeds-content {
+    padding-top: 6.5rem;
+}
+
+.follow-statistics {
+    font-size: 1.5rem;
+}
+
+.follow-statistics div {
+    font-weight: bold;
+    color: #000;
+}
+
+.follow-statistics span {
+    color: rgb(126, 126, 126);
+    font-weight: normal;
+}
+
+.follow-statistics div:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #009dff !important;
+}
+
+.follow-statistics div:hover span {
+    color: #009dff !important;
+}
+
+.follow-statistics div:first-child {
+    margin-right: 1.5rem;
+}
+
+.feeds-header {
+    background-color: #fff;
+    margin-top: 1.5rem;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.1rem solid #eee;
+    padding: 1.5rem;
+}
+
+.header-top h4 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.header-btn {
+    width: 3rem;
+    background-color: transparent;
+    color: #41494e;
+    border: none;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+.dll-item {
+    font-size: 1.5rem;
+}
+
+.header-img-wrapper {
+    width: 12rem;
+    height: 12rem;
+    margin-right: 1.5rem;
+}
+
+.header-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user-avatar {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 1rem;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+// .myicon{
+//     margin-right: 3rem;
+// }
+
+// .myicon:hover {
+//     cursor: pointer;
+//     color: #8bd7fa !important;
+//     transition: color 0.4s; 
+// }
+
+@media (max-width: 800px) {
+    // .post-img {
+    //   height: 20rem;
+    // }
+  }
+  @media (max-width: 1200px) {
+    .main-content ul {
+        padding: 0 2rem;
+    }
+  }
+  @media (max-width: 767px) {
+    .main-content ul {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .header-top h4 {
+        font-size: 2.5rem;
+    }
+    .header-top h2 {
+        font-size: 1.7rem;
+    }
+    .no-tweets-div h1 {
+        font-size: 4rem;
+        font-weight: bold;
+    }
+    .no-tweets-div p {
+        font-size: 1.8rem;
+    }
+  }
+  @media (max-width: 530px) {
+    .main-content a {
+        font-size: 1.4rem;
+    }
+  }
+//   @media (max-width: 600px) {
+//     .post-icons i {
+//       margin-right: 0;
+//     }
+//     .post-user-info h4,
+//     .post-user-info i,
+//     .post-user-info span,
+//     .post-text {
+//       font-size: 1.3rem;
+//     }
+//     .post-icons > span {
+//       margin-right: 3rem;
+//     }
+//     .post-icons > span:last-child {
+//       margin-right: 0;
+//     }
+//     .post-icons i {
+//       font-size: 1.6rem;
+//     }
+//     .user-avatar {
+//       width: 4rem;
+//       height: 4rem;
+//       margin-right: 1rem;
+//     }
+//   }

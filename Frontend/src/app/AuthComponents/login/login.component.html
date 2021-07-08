@@ -1,0 +1,80 @@
+<!-- login page -->
+<section class="login-page dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
+    <!-- login page nav -->
+    <nav class="login-page-nav dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+        <ul>
+            <li class="brand">
+                <a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/"><i class="fas fa-dove"></i> Home</a>
+            </li>
+            <!-- <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"  href="#">About</a></li>
+            <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"  href="#">Language: English</a></li> -->
+        </ul>
+    </nav>
+    <!-- end of login page nav -->
+    <!-- login -->
+    <div class="container-fluid">
+        <div class="login d-flex mx-auto justify-content-center flex-column mt-4 col-10 dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+            <div class="login-content container px-5 mx-auto">
+                <h2 class="text-center fw-bold light-text" [ngClass]="{'light' : isDarkModeEnabled()}">Login To Twitter</h2>
+                <form class="login-form d-flex flex-column" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                    <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
+                        <span>
+                            <input type="email" [class.is-invalid]="email.invalid && email.touched"
+                                formControlName="email"  class="form-control login-user-info mb-2"
+                                placeholder="Enter your Email">
+                            <span *ngIf="email.errors && (email.invalid && email.touched)">
+                                <small class="text-danger error" *ngIf="email.errors?.required">&nbsp; Email is
+                                    required</small>
+                                <small class="text-danger error"
+                                    *ngIf="!email.errors?.required && email.errors?.badPattern">&nbsp; Email is not
+                                    valid</small>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
+                        <span>
+                            <input type="password" name="password" formControlName="password" placeholder="Password"
+                                [class.is-invalid]="password.invalid && password.touched "
+                                class="form-control login-password mb-2">
+                            <span>
+                                <small class="text-danger error" *ngIf="password.touched&&password.errors?.required">
+                                    &nbsp; Password is required
+                                </small>
+                                <small class="text-danger error" *ngIf="invalidEmailOrPassword">
+                                    &nbsp; Invalid email or password
+                                </small>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="m-3 text-center mt-5">
+                        <a routerLink='/forgotpassword'> Forgot Password ?</a>
+                    </div>
+                    <button type="submit" class="btn-top mx-auto" value="Submit Form"
+                        [disabled]="loginForm.invalid">Login</button>
+                </form>
+            </div>
+            <hr class="border">
+            <footer class="login-footer mb-5">
+                <p class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">New to Twitter? <a routerLink="/signup">Sign up now</a></p>
+                <!-- <p class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
+                    Already using Twitter via text message?
+                    <br>
+                    <a href="#">Activate your account</a>
+                </p> -->
+
+            </footer>
+        </div>
+    </div>
+    <!-- end of login -->
+
+    <!-- login modal -->
+    <div class="login-modal">
+        <i class="fas fa-times"></i>
+        <p>
+            The username and password you entered did not match our records. Please double check and try again
+        </p>
+    </div>
+    <!-- end of login modal -->
+</section>
+<!-- end of login page -->

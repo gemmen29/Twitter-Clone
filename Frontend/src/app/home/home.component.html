@@ -1,0 +1,67 @@
+<section class="feeds-page dark-mode-2"  [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
+    <!-- feeds nav -->
+    <app-nav></app-nav>
+    <!-- end of feeds nav -->
+
+    <!-- feeds content -->
+    <div class="container d-flex justify-content-between">
+        <div class="col-12 col-xxl-8 col-xl-8 col-lg-12 main-content">
+            <div class="col-11 mx-auto">
+                <div class="feeds-content">
+                    <div class="feeds-header">
+                        <div class="header-top border dark-mode-1"
+                            [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                            <h4 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">Home</h4>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <!-- <div class="header-post dark-mode-1 border"
+                            [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                            <div class="header-img-wrapper">
+                                <img *ngIf="currentUser != undefined" [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
+                            </div>
+                            <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border h4"
+                                [ngClass]="{'dark-1 border-color light' : isDarkModeEnabled()}" />
+                            <i class="far fa-image"></i>
+                            <i class="fas fa-camera"></i>
+                        </div> -->
+                    </div>
+
+                    <app-tweet class="posts dark-mode-1" [tweetList]="homePageTweets"
+                        (onReply)="openPostTweetWindow($event)"
+                        [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                    </app-tweet>
+
+                    <!-- <ng-container *ngIf="page == 'feed'; else elseTemplate">
+                        <app-tweet class="posts dark-mode-1" [tweetList]="homePageTweets"
+                            (onReply)="openPostTweetWindow($event)"
+                            [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                        </app-tweet>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <app-tweet-details class="posts dark-mode-1"
+                            [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}"></app-tweet-details>
+                    </ng-template> -->
+
+                </div>
+                <div class="text-center py-5">
+                    <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold load-more-btn" (click)="getTweets(pageSize,currentPageNumber + 1)">Load More</button>
+                    <h3 class="light-text d-none" id='all-caught-up-text' [ngClass]="{'light' : isDarkModeEnabled()}">You are all caught up</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="mx-0 col-lg-4 d-none d-lg-block">
+            <app-side-panel></app-side-panel>
+        </div>
+        <!-- end of feeds content -->
+
+        <button type="button" class="post-btn" (click)="openPostTweetWindow()">
+            +<i class="fas fa-feather-alt"></i> Post
+        </button>
+
+        <!-- post modal -->
+        <app-post-tweet style="z-index: 2;" class="modal-wrapper" (onClose)="closePostTweetWindow()"
+            (onPost)="changeSuccessful()"></app-post-tweet>
+        <!-- end of post modal -->
+    </div>
+</section>
